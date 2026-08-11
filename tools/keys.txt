@@ -1,0 +1,165 @@
+Add Macro
+Amount
+Analyse Slot
+Authorization:
+Authorized
+Both
+Charge Items
+Charge:
+Clipboard doesn't
+Close
+Components:
+Content
+Craft
+CraftOnly
+Deauthorized
+Default:
+Delete
+Discharge Items
+Disk
+Done
+Edit Logic Controller
+Exclude
+Excluded
+Exit
+Expected:
+Extract
+Extract Mode: off
+Extract Mode: on
+Fluid
+FluidName
+Hide
+ID:
+Id:
+Include
+Included
+Inv
+Limited
+List
+Log
+Macro Items
+Missing:
+Most likely
+Name:
+No
+No Group
+Nothing
+Now
+OK
+Page
+Please enter a name
+Refresh
+Remove
+Request
+Request Fluid
+Request ID:
+Request Type:
+Request successful!
+Result:
+Save
+Save as Image
+Saved tree view as
+Search:
+Select some items
+Send to Router ID:
+Set
+Show
+Side
+Sinks
+Sneaky
+Sort
+Stored Energy:
+Supply
+SupplyOnly
+Switch
+Timeout:
+Todo:
+Unknown
+Unlimited
+Yes
+You are missing:
+contain a number.
+from:
+pending:
+ticks
+more
+GroupColor: Blue
+GroupColor: Cyan
+GroupColor: Green
+GroupColor: Purple
+GroupColor: RED
+GroupColor: Yellow
+Aspects:
+BeeAllele
+Buffer
+Bulk100
+Bulk50
+Cave
+Cleanup Filer Items
+Couldn't extract the already sended items from the inventory.
+Drone
+Extract Mode:
+Extraction:
+Filter:
+Fluid items
+Flyer
+Full
+Infinite
+ItemSink
+Mod
+Mode:
+Mods:
+No prefixes
+Nocturnal
+Ore
+Ores:
+Partial
+Prefixes:
+Princess
+PureCave
+PureFlyer
+PureNocturnal
+Purebred
+Queen
+Requested Items
+Requested liquids
+Terminated:
+ALL ITEMS:
+Amount:
+Center
+Chassi pipe
+Console
+Crafting Matrix
+Crafting Resources
+Crafting Result
+Disk Slot
+Empty
+Extra has to be an item for a chassis pipe
+Fast
+Filter Inv
+Fluid Multiplication
+Fluids to keep stocked
+Freq Slot
+Freq. card
+In Transit To Me
+Internal LogisticsPipes Error
+Invalid ItemIdentifier
+Invalid ItemIdentifierID
+Item queue mismatch
+LP-Version
+Normal
+Orientation
+Permission denied
+Pipe
+Pluggable
+Router
+Sat ID:
+Send Queue
+Sorting Slot
+State Information
+Status List
+This is no firewall pipe
+This is no routing pipe
+Time:
+Transport
+Unknown texture to power, 
