@@ -69,7 +69,7 @@ public class SweepLP {
     private static final Set<String> LPStringTransformer_KEYS = new HashSet<>();
     static {
         try {
-            byte[] b = Files.readAllBytes(Paths.get("D:\\GTNH++mod\\_lp_tools\\keys.txt"));
+            byte[] b = Files.readAllBytes(Paths.get("tools", "keys.txt"));
             String s = new String(b, StandardCharsets.UTF_8);
             for (String line : s.split("\\r?\\n")) {
                 String t = line.trim();

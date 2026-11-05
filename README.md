@@ -1,55 +1,50 @@
-# LP-Chinese-UI（LP 管道界面中文汉化）
+# LP-Chinese-UI（LogisticsPipes 中文界面）
 
-LogisticsPipes 1.5.26-GTNH 的中文汉化 coremod（Minecraft 1.7.10 / GTNH 整合包）。
+面向 **Minecraft 1.7.10 / GT New Horizons** 的 LogisticsPipes 中文界面项目。提供 `zh_CN.lang` 翻译和客户端 coremod，用于翻译资源文件未覆盖的部分 GUI 文本。
+
+## 下载与安装
+
+从 [GitHub Releases](https://github.com/gtnh806970385-wq/LP-Chinese-UI/releases/latest) 下载 `lpzhcn` 模组 JAR，放入客户端实例的 `mods` 目录。模组以 coremod 方式加载，安装后需重启游戏。无需替换 LogisticsPipes 官方 JAR；不要同时安装仓库旧版发布中的 `logisticspipes-1.5.26-GTNH-hans.jar`。
 
 ## 功能
 
-- **完整 `zh_CN.lang`（459/459 键）**：管道、模块、升级、物品、GUI、聊天、HUD 全覆盖
-- **coremod 运行时常量池安全替换**：汉化 GUI 硬编码字符串（Sort / Refresh / Craft / Both 等约 150 条）
-- **纯客户端**：不改 LP 原 jar，服务器零安装，联机可用
-- **三把锁保证安全**（本项目的核心方法论）：
-  1. **结构安全锁**：只替换被 `CONSTANT_String` 引用且不被任何标识符引用的 UTF8 —— 枚举常量名/方法名/字段名绝不改动
-  2. **逻辑安全锁**：网络频道名、存档文件夹名、unlocalizedName、NBT 键一律不翻译（否则断频道/丢存档）
-  3. **常量池重写锁**：long/double 双槽处理、UTF8 长度前缀写入
+- 提供 LogisticsPipes 1.5.26-GTNH 的 `zh_CN.lang` 翻译文件
+- 对 GUI 中硬编码的文本执行运行时常量池替换
+- 只修改作为字符串内容使用、且未被字段/方法标识符引用的常量
+- 保留网络频道名、存档目录名、unlocalizedName 和 NBT 键等逻辑标识符
+- 部分枚举按钮不能安全地通过常量池替换处理，可能需要 FullScreenIME 的界面渲染翻译支持
+- 客户端本地化；多人游戏仍由服务器决定实际游戏逻辑
 
-## 文件结构
+## 仓库内容
 
-```
-src/com/lpzhcn/
-├── LPChineseCorePlugin.java    # FML coremod 入口
-├── LPChineseMod.java           # mod 主类
-├── LPStringTransformer.java    # 常量池安全替换 transformer（核心）
-└── TestLP.java                 # 单类 CJK 统计验证工具
-trans/
-├── zh_CN.lang                  # 完整翻译（459/459 键）
-└── hardcoded_translations.txt  # 硬编码 GUI 字符串翻译表
-```
+- `src/com/lpzhcn/`：coremod、模组入口与翻译器源码
+- `trans/`：语言文件及硬编码文本翻译表
+- `tools/`：扫描、替换和校验辅助工具
 
 ## 构建
 
-编译需要 JDK + `lwjgl3ify-3.0.23-forgePatches.jar`（提供 `net.minecraft.launchwrapper.IClassTransformer`）。
+当前项目使用手动 `javac` 构建，需要 Java 编译器、Forge 1.7.10 依赖以及提供 `IClassTransformer` 的 GTNH/lwjgl3ify 编译依赖。请将依赖 JAR 的实际路径替换到命令中。
 
+Linux/macOS：
+
+```bash
+mkdir -p build/classes/assets/logisticspipes/lang
+javac -encoding UTF-8 -classpath "<forgePatches.jar>:<forge-universal.jar>" -d build/classes src/com/lpzhcn/*.java
+cp trans/zh_CN.lang build/classes/assets/logisticspipes/lang/zh_CN.lang
+jar cfm build/lpzhcn.jar MANIFEST.MF -C build/classes .
 ```
-javac -encoding UTF-8 -classpath forgePatches.jar;forge-universal.jar -d classes src/com/lpzhcn/*.java
-jar cfm lpzhcn.jar MANIFEST.MF -C classes .
+
+Windows PowerShell 的 classpath 分隔符为分号 `;`：
+
+```powershell
+New-Item -ItemType Directory -Force build/classes/assets/logisticspipes/lang | Out-Null
+javac -encoding UTF-8 -classpath "<forgePatches.jar>;<forge-universal.jar>" -d build/classes src/com/lpzhcn/*.java
+Copy-Item trans/zh_CN.lang build/classes/assets/logisticspipes/lang/zh_CN.lang
+jar cfm build/lpzhcn.jar MANIFEST.MF -C build/classes .
 ```
 
-MANIFEST 需声明 `FMLCorePlugin` 和 `FMLCorePluginContainsFMLMod`。
+JAR manifest 需要声明 `FMLCorePlugin` 与 `FMLCorePluginContainsFMLMod`。发布前应确认 manifest、依赖版本和构建命令与当前 GTNH 环境一致。
 
-## 验证工具链
+## 许可证与上游来源
 
-| 工具 | 作用 | 通过标准 |
-|---|---|---|
-| `_lp_tools/SweepLP.java` | 全量 1357 类验证 | `idViolations=0 / reparseFail=0 / PASS` |
-| `_lp_tools/LPStringCollision.java` | 标识符冲突检测 | 修改类 0 冲突 |
-| `_lp_tools/TestLP.java` | 单类 CJK 统计 | 关键 GUI 类出汉字 |
-| `_lp_tools/ReportReplace.java` | 列出每类替换对 | 人工核对无逻辑字符串 |
-
-## 注意事项
-
-- 枚举常量名（Bulk50 / Bulk100 等）是字段标识符，常量池替换无法安全处理，由全屏输入法 [FullScreenIME](https://github.com/gtnh806970385-wq/FullScreenIME) 的渲染层翻译
-- 部署后重启游戏（coremod 启动时加载），日志看 `logs/fml-client-latest.log`
-
-## 授权
-
-本汉化仅供学习交流使用，请尊重原 Mod 的许可证。
+本仓库目前**没有为自有代码声明许可证**。LogisticsPipes 上游使用 [Minecraft Mod Public License 1.0.1](https://github.com/GTNewHorizons/LogisticsPipes/blob/master/LICENSE.md)。本项目针对的上游版本是 `1.5.26-GTNH`；如分发包含上游代码的修改版，请同时提供对应源码并遵守该许可证。详见 [第三方来源说明](THIRD_PARTY_NOTICES.md)。
